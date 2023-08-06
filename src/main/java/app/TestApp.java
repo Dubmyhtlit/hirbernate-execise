@@ -2,40 +2,55 @@ package app;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-
 import core.util.HibernateUtil;
-import web.member.pojo.Member;
+import web.emp.entity.Dept;
+import web.emp.entity.Emp;
+import web.member.entity.Member;
 
 public class TestApp {
 	
 	public static void main(String[] args) {
 		SessionFactory sessionFactory =  HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
+
+		Emp emp = session.get(Emp.class, 7369);
+		Dept dept = emp.getDept();
+		List<Emp> emps = dept.getEmps();
+		for (Emp tmp : emps) {
+			System.out.println(tmp.getEname());
+		}
 		
-		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		CriteriaQuery<Member> criteriaQuery = criteriaBuilder.createQuery(Member.class);
-		Root<Member> root = criteriaQuery.from(Member.class);
+//		Emp emp = session.get(Emp.class, 7369);
+//		Dept dept = emp.getDept();
+//		System.out.println(dept.getDeptno());
+//		System.out.println(dept.getDname());
 		
-		criteriaQuery.where(criteriaBuilder.and(
-				criteriaBuilder.equal(root.get("username"), "admin"),
-				criteriaBuilder.equal(root.get("password"), "p@ssw0rd")
-				));
+//		Dept dept = session.get(Dept.class, 30);
+//		var emps = dept.getEmps();
+//		for(var emp : emps) {
+//			System.out.println(emp.getEname());
+//		}
 		
-		criteriaQuery.multiselect(root.get("username"), root.get("nickname"));
-		
-		criteriaQuery.orderBy(criteriaBuilder.asc(root.get("id")));
-		
-		Member member = session.createQuery(criteriaQuery).uniqueResult();
-		System.out.println(member.getNickname());
+//		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//		CriteriaQuery<Member> criteriaQuery = criteriaBuilder.createQuery(Member.class);
+//		Root<Member> root = criteriaQuery.from(Member.class);
+//		
+//		criteriaQuery.where(criteriaBuilder.and(
+//				criteriaBuilder.equal(root.get("username"), "admin"),
+//				criteriaBuilder.equal(root.get("password"), "p@ssw0rd")
+//				));
+//		
+//		criteriaQuery.multiselect(root.get("username"), root.get("nickname"));
+//		
+//		criteriaQuery.orderBy(criteriaBuilder.asc(root.get("id")));
+//		
+//		Member member = session.createQuery(criteriaQuery).uniqueResult();
+//		System.out.println(member.getNickname());
 		
 //		TestApp app = new TestApp();
 ////		Member member = new Member();

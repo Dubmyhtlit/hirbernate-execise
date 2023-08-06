@@ -1,4 +1,4 @@
-package web.member.pojo;
+package web.member.entity;
 
 import java.sql.Timestamp;
 
@@ -29,7 +29,7 @@ public class Member extends Core {
 	private String nickname;
 	@Column(insertable = false)
 	private Boolean pass;
-	@Column(name = "ROLE_ID", insertable = false)
+	@Column(name = "ROLE_ID")
 	private Integer roleId;
 	@Column(insertable = false)
 	private String creator;

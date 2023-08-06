@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import web.member.dao.MemberDao;
-import web.member.pojo.Member;
+import web.member.entity.Member;
 
 public class MemberDaoImpl implements MemberDao {
 
@@ -170,7 +170,7 @@ public class MemberDaoImpl implements MemberDao {
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 		CriteriaQuery<Member> criteriaQuery = criteriaBuilder.createQuery(Member.class);
 		Root<Member> root = criteriaQuery.from(Member.class);
-		criteriaQuery.where(criteriaBuilder.equal(root.get("user"), username));
+		criteriaQuery.where(criteriaBuilder.equal(root.get("username"), username));
 		return session
 				.createQuery(criteriaQuery)
 				.uniqueResult();
